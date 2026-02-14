@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://manolomono.github.io/fastvm-site/sitemap.xml
