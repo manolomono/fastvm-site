@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fast VM — Gestion de Maquinas Virtuales QEMU/KVM</title>
+  <meta name="description" content="Fast VM es un sistema web de virtualizacion para administrar maquinas virtuales QEMU/KVM con consola SPICE integrada, monitoreo en tiempo real y gestion completa.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="#" class="logo">
+        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+          <line x1="8" y1="21" x2="16" y2="21"/>
+          <line x1="12" y1="17" x2="12" y2="21"/>
+        </svg>
+        <span>Fast VM</span>
+      </a>
+      <div class="nav-links">
+        <a href="#features">Funcionalidades</a>
+        <a href="#tech">Tecnologias</a>
+        <a href="#install">Instalacion</a>
+        <a href="https://github.com/manolomono/fast_vm" class="btn btn-outline btn-sm" target="_blank" rel="noopener">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+      </div>
+      <button class="mobile-toggle" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-bg"></div>
+    <div class="container hero-content">
+      <div class="badge">Open Source &middot; MIT License</div>
+      <h1>Gestiona tus maquinas virtuales <span class="gradient-text">sin complicaciones</span></h1>
+      <p class="hero-subtitle">Fast VM es un panel web moderno para administrar QEMU/KVM con consola SPICE integrada en el navegador, monitoreo en tiempo real y gestion completa del ciclo de vida de tus VMs.</p>
+      <div class="hero-actions">
+        <a href="#install" class="btn btn-primary btn-lg">
+          Comenzar
+          <svg class="btn-icon-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a href="https://github.com/manolomono/fast_vm" class="btn btn-ghost btn-lg" target="_blank" rel="noopener">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          Ver en GitHub
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-number">48+</span>
+          <span class="stat-label">Tests backend</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-number">60+</span>
+          <span class="stat-label">Tests installer</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-number">SPICE</span>
+          <span class="stat-label">Consola HTML5</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-number">REST</span>
+          <span class="stat-label">API completa</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Terminal Preview -->
+  <section class="terminal-section">
+    <div class="container">
+      <div class="terminal">
+        <div class="terminal-header">
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+          <span class="terminal-title">Terminal</span>
+        </div>
+        <div class="terminal-body">
+          <code>
+            <span class="term-prompt">$</span> <span class="term-cmd">sudo bash install.sh</span><br>
+            <span class="term-output">[+] Verificando dependencias del sistema...</span><br>
+            <span class="term-output">[+] Instalando QEMU/KVM, OVMF, swtpm...</span><br>
+            <span class="term-output">[+] Configurando red y permisos...</span><br>
+            <span class="term-output">[+] Descargando dependencias frontend...</span><br>
+            <span class="term-success">[OK] Fast VM instalado correctamente</span><br>
+            <br>
+            <span class="term-prompt">$</span> <span class="term-cmd">./start.sh</span><br>
+            <span class="term-success">[OK] Servidor iniciado en http://localhost:8000</span>
+          </code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="features-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge">Funcionalidades</div>
+        <h2>Todo lo que necesitas para gestionar tus VMs</h2>
+        <p>Una interfaz moderna y completa para administrar tu infraestructura de virtualizacion.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon feature-icon-blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3>Dashboard Moderno</h3>
+          <p>Interfaz dark con estadisticas en tiempo real, grid de VMs con acciones rapidas y auto-refresco cada 10 segundos.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon feature-icon-purple">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <h3>Consola SPICE HTML5</h3>
+          <p>Accede a tus VMs directamente desde el navegador via WebSocket. Clipboard bidireccional, pantalla completa y sin puertos extra.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon feature-icon-green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <h3>Monitoreo en Tiempo Real</h3>
+          <p>Metricas de CPU, RAM y disco con graficos Chart.js. Push via WebSocket con historial de 10 minutos por VM y host.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon feature-icon-orange">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          </div>
+          <h3>Gestion de Volumenes</h3>
+          <p>Crea volumenes qcow2 o raw, adjunta y desconecta en caliente. Snapshots con creacion, restauracion y eliminacion.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon feature-icon-red">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Seguridad Integrada</h3>
+          <p>Autenticacion JWT, hashing bcrypt, rate limiting, audit logging y soporte para roles de usuario (admin/regular).</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon feature-icon-cyan">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
+          </div>
+          <h3>Hardware Avanzado</h3>
+          <p>UEFI, Secure Boot, TPM 2.0 emulado, QXL optimizado para SPICE y seleccion de modelo de CPU (host, Skylake, EPYC).</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon feature-icon-pink">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3>Guest Agent</h3>
+          <p>Integracion con QEMU Guest Agent para info del SO en tiempo real: IP, hostname, uptime y uso de disco.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon feature-icon-yellow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </div>
+          <h3>Cloud-Init</h3>
+          <p>Genera ISOs cloud-init para provisionamiento automatizado. Configura hostname, usuarios y paquetes desde la interfaz.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OS Support -->
+  <section class="os-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge">Compatibilidad</div>
+        <h2>Soporte para multiples sistemas operativos</h2>
+        <p>Ejecuta practicamente cualquier sistema operativo como maquina virtual.</p>
+      </div>
+      <div class="os-grid">
+        <div class="os-card">
+          <div class="os-icon os-icon-windows">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+          </div>
+          <span class="os-name">Windows 10/11</span>
+          <span class="os-detail">UEFI + Secure Boot + TPM</span>
+        </div>
+        <div class="os-card">
+          <div class="os-icon os-icon-linux">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.835-.39 1.683-.39 2.508C4.698 20.042 7.966 24 12 24s7.302-3.958 7.302-7.632c0-.825-.112-1.673-.39-2.508-.589-1.771-1.831-3.47-2.716-4.521-.75-1.067-.974-1.928-1.05-3.02-.065-1.491 1.056-5.965-3.17-6.298a4.005 4.005 0 00-.472-.021zM9.262 7.2c.403 0 .756.2.985.508.229.308.373.733.373 1.192 0 .459-.144.884-.373 1.192-.229.308-.582.508-.985.508s-.756-.2-.985-.508c-.229-.308-.373-.733-.373-1.192 0-.459.144-.884.373-1.192.229-.308.582-.508.985-.508zm5.476 0c.403 0 .756.2.985.508.229.308.373.733.373 1.192 0 .459-.144.884-.373 1.192-.229.308-.582.508-.985.508s-.756-.2-.985-.508c-.229-.308-.373-.733-.373-1.192 0-.459.144-.884.373-1.192.229-.308.582-.508.985-.508zM8 12.5c.5 0 1.5.67 4 .67s3.5-.67 4-.67c1 0 1.5 1 1.5 2s-2.5 3.5-5.5 3.5S6.5 15.5 6.5 14.5s.5-2 1.5-2z"/></svg>
+          </div>
+          <span class="os-name">Ubuntu / Debian</span>
+          <span class="os-detail">Auto-install guest tools</span>
+        </div>
+        <div class="os-card">
+          <div class="os-icon os-icon-fedora">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 1.5c5.79 0 10.5 4.71 10.5 10.5S17.79 22.5 12 22.5 1.5 17.79 1.5 12 6.21 1.5 12 1.5zm-.028 3.278c-3.6 0-6.528 2.784-6.722 6.312v3.944c0 .608.498 1.102 1.11 1.102h3.862c.612 0 1.11-.494 1.11-1.102V12.84h2.696c.612 0 1.11-.494 1.11-1.102V8.18c0-.608-.498-1.102-1.11-1.102h-2.056zm0 1.5h1.084v3.562h-3.778v2.694H7.75V11.09c0-2.776 2.252-4.812 4.222-4.812z"/></svg>
+          </div>
+          <span class="os-name">Fedora / RHEL</span>
+          <span class="os-detail">Soporte completo</span>
+        </div>
+        <div class="os-card">
+          <div class="os-icon os-icon-arch">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.39.11C10.91 1.26 10.6 2.1 10.06 3.23c-.63 1.3-.53 2.19.22 3.39-1.34-1.08-2.16-1.17-3.56-.75C5.46 6.24 4.29 6.79 2.8 7.83c1.46-.24 2.6-.35 3.52-.02.93.33 1.65.99 2.39 2.24-.94-.44-1.73-.58-2.63-.38-.89.2-1.88.7-3.08 1.6 1.33-.12 2.4-.05 3.2.35.8.39 1.35 1.07 1.89 2.27-.38-.06-.7-.04-1.04.08-.34.12-.68.35-1.15.74.65.05 1.14.2 1.51.49.37.3.58.68.81 1.27.24.61.16 1.2-.07 1.82-.22.62-.58 1.28-1.03 2.07.84-.62 1.47-1.24 1.85-1.88.38-.64.5-1.3.34-2.06.52.58.94.87 1.36 1 .42.13.85.12 1.39.06-.53-.48-.81-.9-.89-1.32s.05-.85.36-1.42c.24.66.57 1.12.98 1.37.41.26.91.33 1.53.27-.7-.62-.94-1.16-.87-1.7.07-.53.44-1.1 1.17-1.79-.3.88-.25 1.56.18 2.05.44.49 1.26.79 2.54.9-.81-.58-1.13-1.12-1.12-1.68.01-.56.36-1.16 1.05-1.88-.37.82-.32 1.5.12 2 .45.49 1.27.81 2.51.94-1.33-.97-1.63-1.82-1.28-2.65.19-.44.55-.88 1.09-1.36-.18.72-.08 1.3.3 1.74.39.44.99.73 1.82.88-.67-.59-.89-1.14-.76-1.7.13-.54.58-1.12 1.36-1.78-.57.67-.73 1.28-.55 1.84.18.57.69 1.09 1.56 1.55-.64-.82-.66-1.5-.22-2.12.22-.31.54-.6.98-.89-1.04.25-1.83.08-2.38-.38-.56-.46-.87-1.2-.95-2.24C20.97 7.49 20.17 6.68 19.05 6.15c-1.11-.53-2.54-.78-4.26-.74.35-.74.58-1.39.67-1.97.1-.58.06-1.07-.14-1.5C14.62.93 13.31.1 11.39.11z"/></svg>
+          </div>
+          <span class="os-name">Arch Linux</span>
+          <span class="os-detail">Soporte completo</span>
+        </div>
+        <div class="os-card">
+          <div class="os-icon os-icon-android">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.344 8.71c-.707 0-1.279.572-1.279 1.278v4.53a1.278 1.278 0 102.558 0v-4.53c0-.706-.572-1.278-1.279-1.278zm-12.688 0c-.707 0-1.279.572-1.279 1.278v4.53a1.278 1.278 0 102.558 0v-4.53A1.277 1.277 0 005.656 8.71zm8.889-3.478h.001l.817-1.484a.339.339 0 10-.594-.327l-.828 1.504A7.236 7.236 0 0012 4.565a7.23 7.23 0 00-1.942.36l-.828-1.505a.339.339 0 10-.594.328l.817 1.484C7.563 6.191 6.17 8.2 6.003 10.6h11.994c-.167-2.399-1.56-4.408-3.452-5.368zM9.652 8.63a.603.603 0 110-1.206.603.603 0 010 1.206zm4.696 0a.603.603 0 110-1.206.603.603 0 010 1.206zM6.26 10.871v5.944c0 .738.599 1.336 1.336 1.336h.763v2.199a1.278 1.278 0 102.558 0v-2.199h2.166v2.199a1.278 1.278 0 002.558 0v-2.199h.763a1.336 1.336 0 001.336-1.336V10.87H6.26z"/></svg>
+          </div>
+          <span class="os-name">Android x86</span>
+          <span class="os-detail">Version 9.0+</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech Stack -->
+  <section id="tech" class="tech-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge">Stack Tecnologico</div>
+        <h2>Construido con tecnologias probadas</h2>
+        <p>Un stack moderno y eficiente para rendimiento y mantenibilidad.</p>
+      </div>
+      <div class="tech-grid">
+        <div class="tech-card">
+          <div class="tech-category">Backend</div>
+          <div class="tech-items">
+            <span class="tech-tag">Python 3.8+</span>
+            <span class="tech-tag">FastAPI</span>
+            <span class="tech-tag">Pydantic v2</span>
+            <span class="tech-tag">JWT</span>
+            <span class="tech-tag">bcrypt</span>
+            <span class="tech-tag">slowapi</span>
+          </div>
+        </div>
+        <div class="tech-card">
+          <div class="tech-category">Frontend</div>
+          <div class="tech-items">
+            <span class="tech-tag">TailwindCSS</span>
+            <span class="tech-tag">Alpine.js</span>
+            <span class="tech-tag">Chart.js</span>
+          </div>
+        </div>
+        <div class="tech-card">
+          <div class="tech-category">Virtualizacion</div>
+          <div class="tech-items">
+            <span class="tech-tag">QEMU/KVM</span>
+            <span class="tech-tag">SPICE</span>
+            <span class="tech-tag">VNC</span>
+            <span class="tech-tag">OVMF (UEFI)</span>
+            <span class="tech-tag">swtpm (TPM)</span>
+          </div>
+        </div>
+        <div class="tech-card">
+          <div class="tech-category">Comunicacion</div>
+          <div class="tech-items">
+            <span class="tech-tag">WebSocket</span>
+            <span class="tech-tag">REST API</span>
+            <span class="tech-tag">SPICE Agent</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Networking -->
+  <section class="network-section">
+    <div class="container">
+      <div class="network-grid">
+        <div class="network-info">
+          <div class="badge">Redes</div>
+          <h2>Networking flexible y potente</h2>
+          <p>Configura la red de tus VMs segun tus necesidades con multiples modos disponibles.</p>
+          <ul class="network-list">
+            <li>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              <div>
+                <strong>NAT</strong> &mdash; Red aislada con acceso a Internet y port forwarding
+              </div>
+            </li>
+            <li>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              <div>
+                <strong>Bridge</strong> &mdash; Conecta la VM directamente a tu red fisica
+              </div>
+            </li>
+            <li>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              <div>
+                <strong>MacVTAP</strong> &mdash; Acceso directo sin bridge, alto rendimiento
+              </div>
+            </li>
+            <li>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              <div>
+                <strong>Isolated</strong> &mdash; Red completamente aislada entre VMs
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="network-visual">
+          <div class="net-diagram">
+            <div class="net-node net-host">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="3"/><line x1="2" y1="8" x2="22" y2="8"/><circle cx="6" cy="5" r="1"/><circle cx="10" cy="5" r="1"/></svg>
+              <span>Host</span>
+            </div>
+            <div class="net-lines">
+              <div class="net-line"></div>
+              <div class="net-line"></div>
+              <div class="net-line"></div>
+            </div>
+            <div class="net-vms">
+              <div class="net-node net-vm">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                <span>VM 1</span>
+              </div>
+              <div class="net-node net-vm">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                <span>VM 2</span>
+              </div>
+              <div class="net-node net-vm">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                <span>VM 3</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Install -->
+  <section id="install" class="install-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge">Instalacion</div>
+        <h2>Listo en minutos</h2>
+        <p>Elige el metodo que mejor se adapte a tu entorno.</p>
+      </div>
+
+      <div class="install-grid">
+        <div class="install-card install-card-featured">
+          <div class="install-badge">Recomendado</div>
+          <h3>Instalador Interactivo</h3>
+          <p>Instala dependencias, configura Docker, red y servicios automaticamente.</p>
+          <div class="code-block">
+            <code>sudo bash install.sh</code>
+            <button class="copy-btn" onclick="navigator.clipboard.writeText('sudo bash install.sh')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="install-card">
+          <h3>Docker Compose</h3>
+          <p>Para entornos con Docker ya configurado. Un solo comando.</p>
+          <div class="code-block">
+            <code>docker compose up -d --build</code>
+            <button class="copy-btn" onclick="navigator.clipboard.writeText('docker compose up -d --build')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="install-card">
+          <h3>Manual</h3>
+          <p>Control total sobre la instalacion. Requiere QEMU, KVM, Python 3 y dependencias.</p>
+          <div class="code-block">
+            <code>git clone https://github.com/manolomono/fast_vm.git<br>cd fast_vm &amp;&amp; pip install -r requirements.txt<br>./start.sh</code>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- API -->
+  <section class="api-section">
+    <div class="container">
+      <div class="api-grid">
+        <div class="api-info">
+          <div class="badge">API REST</div>
+          <h2>API completa y documentada</h2>
+          <p>Todos los endpoints protegidos con JWT. Gestiona VMs, volumenes, snapshots, backups y metricas de forma programatica.</p>
+          <div class="api-endpoints">
+            <div class="endpoint">
+              <span class="method method-post">POST</span>
+              <span class="endpoint-path">/api/auth/login</span>
+            </div>
+            <div class="endpoint">
+              <span class="method method-get">GET</span>
+              <span class="endpoint-path">/api/vms</span>
+            </div>
+            <div class="endpoint">
+              <span class="method method-post">POST</span>
+              <span class="endpoint-path">/api/vms</span>
+            </div>
+            <div class="endpoint">
+              <span class="method method-post">POST</span>
+              <span class="endpoint-path">/api/vms/{id}/start</span>
+            </div>
+            <div class="endpoint">
+              <span class="method method-get">GET</span>
+              <span class="endpoint-path">/api/vms/{id}/snapshots</span>
+            </div>
+            <div class="endpoint">
+              <span class="method method-ws">WS</span>
+              <span class="endpoint-path">/ws/spice/{vm_name}</span>
+            </div>
+          </div>
+        </div>
+        <div class="api-code">
+          <div class="terminal">
+            <div class="terminal-header">
+              <div class="terminal-dots">
+                <span class="dot dot-red"></span>
+                <span class="dot dot-yellow"></span>
+                <span class="dot dot-green"></span>
+              </div>
+              <span class="terminal-title">api-example.sh</span>
+            </div>
+            <div class="terminal-body">
+              <code>
+                <span class="term-comment"># Autenticacion</span><br>
+                <span class="term-prompt">$</span> <span class="term-cmd">TOKEN=$(curl -s -X POST \</span><br>
+                <span class="term-cmd">&nbsp;&nbsp;http://localhost:8000/api/auth/login \</span><br>
+                <span class="term-cmd">&nbsp;&nbsp;-d '{"username":"admin","password":"admin"}' \</span><br>
+                <span class="term-cmd">&nbsp;&nbsp;| jq -r '.access_token')</span><br>
+                <br>
+                <span class="term-comment"># Listar VMs</span><br>
+                <span class="term-prompt">$</span> <span class="term-cmd">curl -s \</span><br>
+                <span class="term-cmd">&nbsp;&nbsp;-H "Authorization: Bearer $TOKEN" \</span><br>
+                <span class="term-cmd">&nbsp;&nbsp;http://localhost:8000/api/vms | jq</span><br>
+                <br>
+                <span class="term-output">[</span><br>
+                <span class="term-output">&nbsp;&nbsp;{</span><br>
+                <span class="term-output">&nbsp;&nbsp;&nbsp;&nbsp;"name": "ubuntu-server",</span><br>
+                <span class="term-output">&nbsp;&nbsp;&nbsp;&nbsp;"status": "running",</span><br>
+                <span class="term-output">&nbsp;&nbsp;&nbsp;&nbsp;"cpu": 4,</span><br>
+                <span class="term-output">&nbsp;&nbsp;&nbsp;&nbsp;"ram_mb": 8192</span><br>
+                <span class="term-output">&nbsp;&nbsp;}</span><br>
+                <span class="term-output">]</span>
+              </code>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Empieza a gestionar tus VMs hoy</h2>
+        <p>Fast VM es open source y gratuito. Instala en tu servidor y toma el control de tu infraestructura de virtualizacion.</p>
+        <div class="hero-actions">
+          <a href="https://github.com/manolomono/fast_vm" class="btn btn-primary btn-lg" target="_blank" rel="noopener">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            Ver repositorio
+          </a>
+          <a href="#install" class="btn btn-ghost btn-lg">Guia de instalacion</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <a href="#" class="logo">
+          <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+          <span>Fast VM</span>
+        </a>
+        <p>Sistema web de virtualizacion QEMU/KVM de codigo abierto.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Proyecto</h4>
+          <a href="https://github.com/manolomono/fast_vm" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://github.com/manolomono/fast_vm/issues" target="_blank" rel="noopener">Issues</a>
+          <a href="https://github.com/manolomono/fast_vm/blob/main/LICENSE" target="_blank" rel="noopener">Licencia MIT</a>
+        </div>
+        <div class="footer-col">
+          <h4>Documentacion</h4>
+          <a href="#install">Instalacion</a>
+          <a href="#features">Funcionalidades</a>
+          <a href="#tech">Tecnologias</a>
+        </div>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>Fast VM &copy; 2025. Distribuido bajo la licencia MIT.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelector('.mobile-toggle').addEventListener('click', function() {
+      document.querySelector('.nav-links').classList.toggle('active');
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          document.querySelector('.nav-links').classList.remove('active');
+        }
+      });
+    });
+
+    window.addEventListener('scroll', function() {
+      const nav = document.querySelector('.navbar');
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.feature-card, .tech-card, .install-card, .os-card, .stat').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
