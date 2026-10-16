@@ -1,0 +1,11 @@
+# Landing de Fast VM (fastvm.isasa.es): web estática servida por nginx en 127.0.0.1:9113. Delante, el
+# nginx del host con HTTPS (deploy/fastvm.isasa.es.conf). Desplegar con ./deploy.sh.
+services:
+  web:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:9113:80"
+    volumes:
+      - ./site:/usr/share/nginx/html:ro
+      - ./deploy/site.conf:/etc/nginx/conf.d/default.conf:ro

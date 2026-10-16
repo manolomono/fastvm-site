@@ -992,6 +992,7 @@ img {
 
 .footer-links {
   display: flex;
+  flex-wrap: wrap;
   gap: 64px;
 }
 
@@ -1027,6 +1028,14 @@ img {
 .footer-bottom p {
   font-size: 0.8rem;
   color: var(--text-muted);
+}
+
+.footer-bottom a {
+  color: var(--text-secondary);
+}
+
+.footer-bottom a:hover {
+  color: var(--text);
 }
 
 /* ===== Responsive ===== */
